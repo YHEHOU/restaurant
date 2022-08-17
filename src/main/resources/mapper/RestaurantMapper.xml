@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smy.springboot2204.dao.RestaurantMapper">
+  <resultMap id="BaseResultMap" type="com.smy.springboot2204.pojo.Restaurant">
+    <id column="rest_id" jdbcType="INTEGER" property="restId" />
+    <result column="rest_name" jdbcType="VARCHAR" property="restName" />
+    <result column="rest_address" jdbcType="VARCHAR" property="restAddress" />
+    <result column="rest_phone" jdbcType="VARCHAR" property="restPhone" />
+    <result column="rest_photo" jdbcType="VARCHAR" property="restPhoto" />
+    <result column="rest_info" jdbcType="VARCHAR" property="restInfo" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.smy.springboot2204.pojo.Order">
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_createTime" jdbcType="VARCHAR" property="orderCreatetime" />
+    <result column="order_price" jdbcType="INTEGER" property="orderPrice" />
+    <result column="order_address" jdbcType="VARCHAR" property="orderAddress" />
+    <result column="order_review" jdbcType="VARCHAR" property="orderReview" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rest_id, rest_name, rest_address, rest_phone, rest_photo, rest_info
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_restaurant
+    where rest_id = #{restId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_restaurant
+    where rest_id = #{restId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smy.springboot2204.pojo.Restaurant">
+    insert into tbl_restaurant (rest_id, rest_name, rest_address, 
+      rest_phone,  rest_info
+      )
+    values (#{restId,jdbcType=INTEGER}, #{restName,jdbcType=VARCHAR}, #{restAddress,jdbcType=VARCHAR}, 
+      #{restPhone,jdbcType=VARCHAR},  #{restInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.smy.springboot2204.pojo.Restaurant">
+    insert into tbl_restaurant
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="restId != null">
+        rest_id,
+      </if>
+      <if test="restName != null">
+        rest_name,
+      </if>
+      <if test="restAddress != null">
+        rest_address,
+      </if>
+      <if test="restPhone != null">
+        rest_phone,
+      </if>
+      <if test="restPhoto != null">
+        rest_photo,
+      </if>
+      <if test="restInfo != null">
+        rest_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="restId != null">
+        #{restId,jdbcType=INTEGER},
+      </if>
+      <if test="restName != null">
+        #{restName,jdbcType=VARCHAR},
+      </if>
+      <if test="restAddress != null">
+        #{restAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="restPhone != null">
+        #{restPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="restPhoto != null">
+        #{restPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="restInfo != null">
+        #{restInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+<!--  修改门店-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.smy.springboot2204.pojo.Restaurant">
+    update tbl_restaurant
+    <set>
+      <if test="restName != null">
+        rest_name = #{restName,jdbcType=VARCHAR},
+      </if>
+      <if test="restAddress != null">
+        rest_address = #{restAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="restPhone != null">
+        rest_phone = #{restPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="restPhoto != null">
+        rest_photo = #{restPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="restInfo != null">
+        rest_info = #{restInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rest_id = #{restId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smy.springboot2204.pojo.Restaurant">
+    update tbl_restaurant
+    set rest_name = #{restName,jdbcType=VARCHAR},
+      rest_address = #{restAddress,jdbcType=VARCHAR},
+      rest_phone = #{restPhone,jdbcType=VARCHAR},
+      rest_photo = #{restPhoto,jdbcType=VARCHAR},
+      rest_info = #{restInfo,jdbcType=VARCHAR}
+    where rest_id = #{restId,jdbcType=INTEGER}
+  </update>
+<!--查询所有门店-->
+ <select id="selectAllRest" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_restaurant
+  </select>
+<!--通过名字模糊查询-->
+<select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_restaurant
+    where rest_name like "%"#{restName,jdbcType=VARCHAR}"%"
+  </select>
+
+ <update id="updatePhoto" parameterType="com.smy.springboot2204.pojo.Restaurant">
+    update tbl_restaurant
+    set rest_photo = #{restPhoto,jdbcType=VARCHAR}
+    where rest_id = #{restId,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="selectOrderByName" parameterType="java.lang.Integer" resultMap="BaseResultMap2">
+    select o.*
+    from tbl_order o
+    left join order_item i on o.order_id=i.order_id
+    left join tbl_restaurant r on r.rest_id=i.rest_id
+    where r.rest_id= #{restId,jdbcType=INTEGER}
+  </select>
+
+</mapper>

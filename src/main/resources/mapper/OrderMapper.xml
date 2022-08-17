@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smy.springboot2204.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.smy.springboot2204.pojo.Order">
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_createTime" jdbcType="VARCHAR" property="orderCreatetime" />
+    <result column="order_price" jdbcType="INTEGER" property="orderPrice" />
+    <result column="order_address" jdbcType="VARCHAR" property="orderAddress" />
+    <result column="order_review" jdbcType="VARCHAR" property="orderReview" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, order_no, order_createTime, order_price, order_address, order_review
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smy.springboot2204.pojo.Order">
+    insert into tbl_order (order_id, order_no, order_createTime, 
+      order_price, order_address, order_review
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{orderCreatetime,jdbcType=VARCHAR}, 
+      #{orderPrice,jdbcType=INTEGER}, #{orderAddress,jdbcType=VARCHAR}, #{orderReview,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.smy.springboot2204.pojo.Order">
+    insert into tbl_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="orderCreatetime != null">
+        order_createTime,
+      </if>
+      <if test="orderPrice != null">
+        order_price,
+      </if>
+      <if test="orderAddress != null">
+        order_address,
+      </if>
+      <if test="orderReview != null">
+        order_review,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreatetime != null">
+        #{orderCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=INTEGER},
+      </if>
+      <if test="orderAddress != null">
+        #{orderAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orderReview != null">
+        #{orderReview,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smy.springboot2204.pojo.Order">
+    update tbl_order
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreatetime != null">
+        order_createTime = #{orderCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null">
+        order_price = #{orderPrice,jdbcType=INTEGER},
+      </if>
+      <if test="orderAddress != null">
+        order_address = #{orderAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orderReview != null">
+        order_review = #{orderReview,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smy.springboot2204.pojo.Order">
+    update tbl_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      order_createTime = #{orderCreatetime,jdbcType=VARCHAR},
+      order_price = #{orderPrice,jdbcType=INTEGER},
+      order_address = #{orderAddress,jdbcType=VARCHAR},
+      order_review = #{orderReview,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+
+
+</mapper>

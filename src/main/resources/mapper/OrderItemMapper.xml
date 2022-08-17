@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smy.springboot2204.dao.OrderItemMapper">
+  <resultMap id="BaseResultMap" type="com.smy.springboot2204.pojo.OrderItem">
+    <id column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="pro_id" jdbcType="INTEGER" property="proId" />
+    <result column="item_num" jdbcType="INTEGER" property="itemNum" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="rest_id" jdbcType="INTEGER" property="restId" />
+    <result column="item_state" jdbcType="VARCHAR" property="itemState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    item_id, order_id, pro_id, item_num, user_id, rest_id, item_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_item
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_item
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smy.springboot2204.pojo.OrderItem">
+    insert into order_item (item_id, order_id, pro_id, 
+      item_num, user_id, rest_id, 
+      item_state)
+    values (#{itemId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{proId,jdbcType=INTEGER}, 
+      #{itemNum,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{restId,jdbcType=INTEGER}, 
+      #{itemState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smy.springboot2204.pojo.OrderItem">
+    insert into order_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="proId != null">
+        pro_id,
+      </if>
+      <if test="itemNum != null">
+        item_num,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="restId != null">
+        rest_id,
+      </if>
+      <if test="itemState != null">
+        item_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="proId != null">
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="itemNum != null">
+        #{itemNum,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="restId != null">
+        #{restId,jdbcType=INTEGER},
+      </if>
+      <if test="itemState != null">
+        #{itemState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smy.springboot2204.pojo.OrderItem">
+    update order_item
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="proId != null">
+        pro_id = #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="itemNum != null">
+        item_num = #{itemNum,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="restId != null">
+        rest_id = #{restId,jdbcType=INTEGER},
+      </if>
+      <if test="itemState != null">
+        item_state = #{itemState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smy.springboot2204.pojo.OrderItem">
+    update order_item
+    set order_id = #{orderId,jdbcType=INTEGER},
+      pro_id = #{proId,jdbcType=INTEGER},
+      item_num = #{itemNum,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      rest_id = #{restId,jdbcType=INTEGER},
+      item_state = #{itemState,jdbcType=VARCHAR}
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+</mapper>
